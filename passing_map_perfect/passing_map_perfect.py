@@ -40,6 +40,7 @@ mass = ALPHA_PARTICLE_MASS
 Ekin = FUSION_ALPHA_PARTICLE_ENERGY
 v0 = np.sqrt(2*Ekin/mass)
 
+sign_vpar = 1.0 # should be +/- 1. sign(vpar)
 pitch_angle = 0.0 # lambda = v_perp^2/(v^2 B) = const. along trajectory
 nchi_poinc = 1 # Number of zeta initial conditions for poincare
 ns_poinc = 120 # Number of s initial conditions for poincare
@@ -173,7 +174,7 @@ def vpar_func(s,chi):
     if (1 - pitch_angle*modB < 0):
         return None
     else:
-        return v0*np.sqrt(1 - pitch_angle*modB)
+        return sign_vpar*v0*np.sqrt(1 - pitch_angle*modB)
 
 s = np.linspace(0.1,0.9,ns_poinc)
 chis = np.linspace(0,2*np.pi,nchi_poinc)
