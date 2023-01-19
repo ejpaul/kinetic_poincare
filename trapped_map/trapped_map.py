@@ -410,7 +410,8 @@ point = np.zeros((3,))
 
 """
 This returns the pseudomap, obtained by adding nu to the radial coordinate
-returned from the true trapped map.
+returned from the true trapped map. For given (s,chi), the corresponding
+zeta is computed using chi_mirror_func. 
 angle = zeta
 radius = s
 normal = nu
@@ -443,9 +444,10 @@ def pseudomap(angleradiusnormal):
 
 """
 Here we seek a p/q periodic orbit from the pseudomap.
+radiusnormal = [s,nu]
 """
-def qqpseudomap(radiusnormal, theta, pp, qq):
-    radiusnormalorig = [ theta, radiusnormal[0], radiusnormal[1] ]
+def qqpseudomap(radiusnormal, zeta, pp, qq):
+    radiusnormalorig = [ zeta, radiusnormal[0], radiusnormal[1] ]
     radiusnormalnew = radiusnormalorig
     for ii in range(qq): # Perform qq pseodomaps
         radiusnormalnew = pseudomap(radiusnormalnew)
