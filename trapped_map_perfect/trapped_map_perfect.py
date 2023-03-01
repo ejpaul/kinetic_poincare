@@ -245,6 +245,9 @@ for i in range(first,last):
 if comm is not None:
     chis = [i for o in comm.allgather(chis_all) for i in o]
     s = [i for o in comm.allgather(s_all) for i in o]
+else:
+    chis = chis_all 
+    s = s_all
 
 zetas = np.linspace(0,2*np.pi/nfp,nzeta_poinc)
 zetas2d,s2d = np.meshgrid(zetas,s)

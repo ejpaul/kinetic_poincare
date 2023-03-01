@@ -42,7 +42,7 @@ v0 = np.sqrt(2*Ekin/mass)
 
 sign_vpar = 1.0 # should be +/- 1. sign(vpar)
 pitch_angle = 0.0 # lambda = v_perp^2/(v^2 B) = const. along trajectory
-nchi_poinc = 1 # Number of zeta initial conditions for poincare
+nchi_poinc = 1 # Number of chi initial conditions for poincare
 ns_poinc = 120 # Number of s initial conditions for poincare
 tol = 1e-10 # gc integration tolerance
 Npts = 500 # number of points for poincare plotting
@@ -198,6 +198,10 @@ if comm is not None:
     chis = [i for o in comm.allgather(chis_all) for i in o]
     s = [i for o in comm.allgather(s_all) for i in o]
     vpar = [i for o in comm.allgather(vpar_all) for i in o]
+else: 
+    chis = chis_all
+    s = s_all 
+    vpar = vpar_all
 
 time2 = time.time()
 if verbose:

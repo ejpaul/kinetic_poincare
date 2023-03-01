@@ -284,6 +284,9 @@ if comm is not None:
     chis2d = [i for o in comm.allgather(chis2d) for i in o]
     s2d = [i for o in comm.allgather(s2d_all) for i in o]
     zetas2d = [i for o in comm.allgather(zetas2d_all) for i in o]
+else:
+    s2d = s2d_all 
+    zetas2d = zetas2d_all
 
 time2 = time.time()
 if verbose:
@@ -595,16 +598,16 @@ if comm is not None:
     radius_all = [i for o in comm.allgather(radius_all) for i in o]
     pp_all = [i for o in comm.allgather(pp_all) for i in o]
     qq_all = [i for o in comm.allgather(qq_all) for i in o]
-    if comm.rank == 0:
-        f = open('summary.txt','w')
-        plt.figure(1)
-        ax = plt.gca()
-        ax.set_prop_cycle(color=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)],marker=marker_list)
-        for i in range(len(radius_all)):
-            f.write('{}{}{}\n'.format(str(int(pp_all[i])).ljust(10),str(int(qq_all[i])).ljust(10),np.max(np.abs(nus_all[i]))))
-            plt.plot(zetas_all[i],radius_all[i],markevery=markevery,label=str(int(pp_all[i]))+', '+str(int(qq_all[i])),linewidth=1.0,markersize=markersize)
-        lgd = plt.legend(bbox_to_anchor=(1.0,1.0),ncol=2)
-        plt.savefig('poincare_with_pseudomap.pdf',bbox_extra_artists=(lgd,), bbox_inches='tight')
+if verbose:
+    f = open('summary.txt','w')
+    plt.figure(1)
+    ax = plt.gca()
+    ax.set_prop_cycle(color=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)],marker=marker_list)
+    for i in range(len(radius_all)):
+        f.write('{}{}{}\n'.format(str(int(pp_all[i])).ljust(10),str(int(qq_all[i])).ljust(10),np.max(np.abs(nus_all[i]))))
+        plt.plot(zetas_all[i],radius_all[i],markevery=markevery,label=str(int(pp_all[i]))+', '+str(int(qq_all[i])),linewidth=1.0,markersize=markersize)
+    lgd = plt.legend(bbox_to_anchor=(1.0,1.0),ncol=2)
+    plt.savefig('poincare_with_pseudomap.pdf',bbox_extra_artists=(lgd,), bbox_inches='tight')
 
 time2 = time.time()
 if verbose:
