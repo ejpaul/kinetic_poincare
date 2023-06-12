@@ -42,10 +42,10 @@ v0 = np.sqrt(2*Ekin/mass)
 
 sign_vpar = 1.0 # should be +/- 1. sign(vpar)
 pitch_angle = 0.0 # lambda = v_perp^2/(v^2 B) = const. along trajectory
-nchi_poinc = 1 # Number of chi initial conditions for poincare
-ns_poinc = 120 # Number of s initial conditions for poincare
+nchi_poinc = 1 # Number of chi initial conditions for Poincare
+ns_poinc = 120 # Number of s initial conditions for Poincare
 tol = 1e-10 # gc integration tolerance
-Npts = 500 # number of points for poincare plotting
+Npts = 500 # number of points for Poincare plotting
 tmax = 1e-2 # time limit for gc integration
 rescale = False # if True, vmec equilibrium is rescaled to ARIES-CS size and field strength
 mpol = 48 # poloidal resolution for booz_xform
@@ -113,7 +113,7 @@ time2 = time.time()
 if verbose:
     print('IBF time: ',time2-time1)
 
-# Plot modB as a funtion of the symmetry angle. This is a check that helicity is correct.
+# Plot modB as a function of the symmetry angle. This is a check that helicity is correct.
 if const_bool:
     zetas_grid = np.linspace(0,2*np.pi/nfp,100)
     points = np.zeros((len(zetas_grid),3))
@@ -129,7 +129,7 @@ if const_bool:
 
 def passing_map(point):
     """
-    Integates the gc equations from one mirror point to the next mirror point.
+    Integrates the gc equations from one mirror point to the next mirror point.
     point contains the [s, chi, vpar] coordinates and returns the same coordinates
     after mapping.
     """
@@ -162,7 +162,7 @@ def passing_map(point):
     return point
 
 """
-Function to compute vparallel given (s,chi)
+Ffunction to compute vparallel given (s,chi)
 """
 def vpar_func(s,chi):
     point = np.zeros((1,3))
