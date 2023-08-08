@@ -122,7 +122,7 @@ degree = 3
 srange = (0, 1, ns_interp)
 thetarange = (0, np.pi, ntheta_interp)
 zetarange = (0, 2*np.pi/nfp, nzeta_interp)
-field = InterpolatedBoozerField(bri, degree, srange, thetarange, zetarange, True, nfp=nfp, stellsym=True)
+field = InterpolatedBoozerField(bri, degree, srange, thetarange, zetarange, True, nfp=nfp, stellsym=True,initialize=['modB', 'modB_derivs'])
 
 time2 = time.time()
 if verbose:
