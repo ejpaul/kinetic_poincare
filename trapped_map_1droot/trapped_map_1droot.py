@@ -108,7 +108,7 @@ if verbose:
     print('IBF time: ',time2-time1)
 
 # Compute min and max B as a function of radius
-if min_max_bool:
+if (min_max_bool and verbose):
     minB = []
     maxB = []
     s_grid = np.linspace(0,1,100)
@@ -126,7 +126,7 @@ if min_max_bool:
     plt.savefig('minmaxB.png')
 
 # Plot modB as a funtion of the symmetry angle. This is a check that helicity is correct.
-if const_bool:
+if (const_bool and verbose):
     zetas_grid = np.linspace(0,2*np.pi/nfp,100)
     points = np.zeros((len(zetas_grid),3))
     points[:,0] = 0.5
@@ -206,50 +206,26 @@ points[:,2] = zeta_mirror
 field.set_points(points)
 modBcrit = field.modB()[0,0]
 
-# Compute min and max B as a function of radius. modBcrit is overlaid so
-# we can see where trapped particles exist.
-if min_max_bool:
-    minB = []
-    maxB = []
-    s_grid = np.linspace(0,1,100)
-    chis_grid = np.linspace(0,2*np.pi,100)
-    points = np.zeros((len(chis_grid),3))
-    for i in range(len(s_grid)):
-        points[:,0] = s_grid[i]
-        points[:,1] = chis_grid
-        field.set_points(points)
-        minB.append(np.min(field.modB()))
-        maxB.append(np.max(field.modB()))
-    plt.figure()
-    plt.plot(s_grid,maxB)
-    plt.plot(s_grid,minB)
-    plt.xlabel('s')
-    plt.ylabel('B')
-    plt.axhline(modBcrit)
-    plt.savefig('minmaxB.png')
-
 def bound_chi(s,zeta):
     # Make sure that bracket has different signs
     leftbound = leftbound_init 
     rightbound = rightbound_init
-    # leftbound = chi_mirror - np.pi*0.05
-    # rightbound = chi_mirror + np.pi*0.05
     # First adjust leftbound, keeping rightbound fixed
     while (diffmodB(leftbound,s,zeta)*diffmodB(rightbound,s,zeta)>0):
-        print('first while ')
+        # print('first while ')
         leftbound -= np.pi*0.01
-        print('leftbound: ',leftbound)
-        print('value: ',diffmodB(leftbound,s,zeta))
+        # print('leftbound: ',leftbound)
+        # print('value: ',diffmodB(leftbound,s,zeta))
         if leftbound < -(1/2)*np.pi:
             leftbound = leftbound_init
             break
     # If needed, adjust rightbound, keeping leftbound fixed
     while (diffmodB(leftbound,s,zeta)*diffmodB(rightbound,s,zeta)>0):
-        print('second while')
+        # print('second while')
         leftbound = leftbound_init
         rightbound += np.pi*0.01
-        print('rightbound: ',rightbound)
-        print('value: ',diffmodB(rightbound,s,zeta))
+        # print('rightbound: ',rightbound)
+        # print('value: ',diffmodB(rightbound,s,zeta))
         if rightbound > (3/2)*np.pi:
             rightbound = rightbound_init
             break 
@@ -552,8 +528,8 @@ for i in range(first,last):
                     error_left == 1e3 or 
                     error_right == 1e3):
                     print('qqmap bracket failed')
-                    print('bracket_right: ',bracket_right)
-                    print('bracket_left: ',bracket_left)
+                    # print('bracket_right: ',bracket_right)
+                    # print('bracket_left: ',bracket_left)
                     count = count + 1
                     print('count: ',count)
                     if count >= 10:
@@ -569,7 +545,7 @@ for i in range(first,last):
                 sol = root(lambda x: [qqmap(x[0],zeta,qq,pp)], x0=[rn], method='hybr', options={'eps':1e-2, 'factor':factor_pseudo, 'xtol':xtol})
                 rn = sol.x[0]            
                 converged = sol.success
-                print('sol.message: ',sol.message)
+                # print('sol.message: ',sol.message)
                 print('error: ',sol.fun)
             if (converged):
                 zetas.append(zeta)
